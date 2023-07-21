@@ -11,6 +11,7 @@ const itemSchema = new mongoose.Schema({
     name: String,
     description: String,
     quantity: Number,
+    price: Number
   });
 
 //Define a Model for the items schema

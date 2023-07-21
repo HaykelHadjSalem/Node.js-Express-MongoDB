@@ -14,12 +14,43 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 app.get('/', (req, res) => {
-    res.send('Hello World!')
+    res.send('Hello World!!!!!!!!')
   })
 
 //Request Handler for the Read Operation on the endpoint /api/items
 app.get('/api/items', (req, res) => {
     //Fetch all data stored inside the items collection
+    Item.find().then((items) => {
+      res.json(items)
+    }).catch(err => {
+      res.status(500).send(err)
+    })
+    
+})
+app.post('/api/items', (req, res) => {
+    Item.create(req.body).then((item) => {
+      res.status(201).json(item)
+    }).catch(err => {
+      res.status(500).send(err)
+    })
+    
+})
+app.put('/api/items/:id', (req, res) => {
+  console.log(req.params)
+    Item.findOneAndUpdate({_id:req.params.id},req.body, {new: true}).then((item) => {
+      res.status(200).json(item)
+    }).catch(err => {
+      res.status(500).send(err)
+    })
+    
+})
+app.delete('/api/items/:id', (req, res) => {
+  console.log(req.params)
+    Item.findOneAndDelete({_id:req.params.id}).then((item) => {
+      res.status(202).json(item)
+    }).catch(err => {
+      res.status(500).send(err)
+    })
     
 })
 
